@@ -14,11 +14,11 @@ class m171224_061437_create_article_category_table extends Migration
     {
         $this->createTable('article_category', [
             'id' => $this->primaryKey(),
-            'name'=>$this->string(50)->notNull()->comment("文章名称"),
-            'intro'=>$this->text()->comment("文章简介"),
-            'status'=>$this->smallInteger()->notNull()->comment("状态"),
-            'sort'=>$this->smallInteger()->notNull()->comment("排序"),
-            'is_help'=>$this->smallInteger()->notNull()->comment("是否是帮助的相关分类")
+            'name'=>$this->string(100)->notNull()->comment("名称"),
+            'status'=>$this->smallInteger()->notNull()->defaultValue(1)->comment("状态:1 显示  2 隐藏"),
+            'sort'=>$this->integer()->notNull()->defaultValue(100)->comment("排序"),
+            'intro'=>$this->string()->comment("简介"),
+            'is_help'=>$this->smallInteger()->notNull()->defaultValue(0)->comment("是否帮助类别"),
         ]);
     }
 

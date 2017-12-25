@@ -12,14 +12,23 @@ class m171224_080139_create_article_table extends Migration
      */
     public function up()
     {
+        //文章管理表
         $this->createTable('article', [
             'id' => $this->primaryKey(),
-            'name'=>$this->string(50)->notNull()->comment("文章名称"),
-            'article_category_id'=>$this->smallInteger()->notNull()->comment("文章分类"),
-            'intro'=>$this->text()->comment("文章简介"),
-            'status'=>$this->smallInteger()->notNull()->comment("状态"),
-            'sort'=>$this->smallInteger()->notNull()->comment("排序"),
-            'inputtime'=>$this->integer()->comment("上架时间")
+            'title'=>$this->string(100)->notNull()->comment("文章标题"),
+            'create_time'=>$this->integer()->notNull()->comment("创建时间"),
+            'status'=>$this->smallInteger()->notNull()->defaultValue(1)->comment("状态 1显示 2隐藏"),
+            'sort'=>$this->integer()->notNull()->defaultValue(100)->comment("排序"),
+            'intro'=>$this->string()->comment("简介"),
+            'cate_id'=>$this->integer()->notNull()->comment("分类id"),
+        ]);
+
+        //文章内容表
+        $this->createTable('detail', [
+            'id' => $this->primaryKey(),
+            'content'=>$this->text()->notNull()->comment("文章内容"),
+            'article_id'=>$this->integer()->notNull()->comment("文章id"),
+
         ]);
     }
 

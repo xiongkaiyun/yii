@@ -15,7 +15,7 @@
     <?php foreach ($brands as $brand):?>
         <tr>
             <td><?=$brand->name?></td>
-            <td><?=\yii\bootstrap\Html::img('/'.$brand->logo,['height'=>50])?></td>
+            <td><?=\yii\bootstrap\Html::img($brand->logo,['height'=>50])?></td>
             <td><?=$brand->intro?></td>
             <td>
                 <?php

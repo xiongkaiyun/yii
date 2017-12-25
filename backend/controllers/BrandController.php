@@ -3,7 +3,9 @@
 namespace backend\controllers;
 
 use backend\models\Brand;
+use flyok666\qiniu\Qiniu;
 use yii\web\UploadedFile;
+
 
 class BrandController extends \yii\web\Controller
 {
@@ -142,10 +144,10 @@ class BrandController extends \yii\web\Controller
         }
     }
 
-    //webuploader 文件上传
+    //webuploader 图片上传
     public function actionUpload(){
 
-        //得到上传文件的实例对象
+      /*  //得到上传文件的实例对象
        $file= UploadedFile::getInstanceByName("file");
         if ($file) {
             //路径
@@ -161,9 +163,29 @@ class BrandController extends \yii\web\Controller
 
                 return json_encode($result);
             }
-        }
+        }*/
+      //七牛云配置
+        $config = [
+            'accessKey' => 'u4hczG8b6j6R66DmVlygkyORGLwXNWppKLL3ZxHr',//AK
+            'secretKey' => 'HR7mwuobEUl1yEqK-0IjgTvvWHe-vw5DZd2TJ_xU',//SK
+            'domain' => 'http://p1hydf34h.bkt.clouddn.com',//临时域名
+            'bucket' => 'xiongkaiyun',//空间名称
+            'area' => Qiniu::AREA_HUANAN//区域
 
+        ];
 
+        $qiniu = new Qiniu($config);//实例化对象
+        $key = time();//上传后的文件名  多文件上传有坑
+        $qiniu->uploadFile($_FILES['file']["tmp_name"], $key);//调用上传方法上传文件
+        $url = $qiniu->getLink($key);//得到上传后的地址
+
+        //返回的结果
+        $result = [
+            'code' => 0,
+            'url' => $url,
+            'attachment' => $url
+        ];
+        return json_encode($result);
     }
 
 }

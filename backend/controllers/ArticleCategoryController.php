@@ -6,84 +6,79 @@ use backend\models\ArticleCategory;
 
 class ArticleCategoryController extends \yii\web\Controller
 {
-
-    //显示列表视图
     public function actionIndex()
     {
-        //获取所有数据
-        $articles=ArticleCategory::find()->all();
-//        var_dump($articles);exit;
-        //显示视图
+        //显示所有数据
+        $articles = ArticleCategory::find()->all();
+        //显示页面
         return $this->render('index',compact('articles'));
     }
 
-    //添加文章
-    public function actionAdd(){
-        //创建模型对象
-        $articles=new ArticleCategory();
-
-        //创建request对象
-        $request=\Yii::$app->request;
-
-        //判断是不是POST提交
+    ///添加
+    public function actionAdd()
+    {
+        //new一个模型对象
+        $model = new ArticleCategory();
+        //实例化
+        $request = \Yii::$app->request;
         if ($request->isPost){
-            //绑定数据
-            $articles->load($request->post());
-            //后台验证
-            if ($articles->validate()){
-                //验证成功
+            //绑定数据库
+            $model->load($request->post());
+            //后端验证
+            if ($model->validate()) {
                 //保存数据
-                if ($articles->save()) {
-                    //跳转到首页
+                if ($model->save()) {
+                    //友情提示
+                    \Yii::$app->session->setFlash("success",'添加成功');
+                    //跳转
                     return $this->redirect(['index']);
                 }
-
             }else{
                 //TODO
-                var_dump($articles->getErrors());exit;
-
+                var_dump($model->errors);exit;
             }
         }
         //显示视图
-        return $this->render("add",compact('articles'));
+        return $this->render('add', ['model' => $model]);
     }
 
-
     //修改
-    public function actionEdit($id){
-        //获取数据
-        $articles=ArticleCategory::findOne($id);
-
-        //创建request对象
+    public function actionEdit($id)
+    {
+        //获取一条数据
+        $model=ArticleCategory::findOne($id);
+        //实例化
         $request=\Yii::$app->request;
-
-        //判断是不是POST提交
         if ($request->isPost){
-            //绑定数据
-            $articles->load($request->post());
-            //后台验证
-            if ($articles->validate()){
-                //验证成功
+            //绑定数据库
+            $model->load($request->post());
+            //后端验证
+            if ($model->validate()) {
                 //保存数据
-                if ($articles->save()) {
-                    //跳转到首页
+                if ($model->save()) {
+                    //友情提示
+                    \Yii::$app->session->setFlash("success",'修改成功');
+                    //跳转
                     return $this->redirect(['index']);
                 }
-
             }else{
                 //TODO
-                var_dump($articles->getErrors());exit;
-
+                var_dump($model->errors);exit;
             }
         }
         //显示视图
-        return $this->render("add",compact('articles'));
+        return $this->render('add', ['model' => $model]);
     }
 
     //删除
-    public function actionDelete($id){
-        if (ArticleCategory::findOne($id)->delete()) {
-
+    public function actionDel($id)
+    {
+        //获取删除的id
+        $brand = ArticleCategory::findOne($id);
+        if ($brand->delete()) {
+            //友情提示
+            \Yii::$app->session->setFlash("success",'删除成功');
+            //跳转
             return $this->redirect(['index']);
         }
     }

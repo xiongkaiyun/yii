@@ -12,28 +12,32 @@ use Yii;
  */
 class ArticleDetail extends \yii\db\ActiveRecord
 {
-
+    /**
+     * @inheritdoc
+     */
     public static function tableName()
     {
         return 'article_detail';
     }
 
-    //规则
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-
-            [['content'], 'string']
+            [['content'], 'required'],
         ];
     }
 
-    //lable
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
-
+            'article_id' => 'Article ID',
             'content' => '文章内容',
         ];
     }
-
 }

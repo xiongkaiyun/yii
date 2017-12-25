@@ -1,31 +1,31 @@
 <?php
-
+/* @var $this yii\web\View */
 ?>
-<a href="<?=\yii\helpers\Url::to(['add'])?>" class="btn btn-success">添加文章</a>
-<table class="table table-bordered">
+<h1>文章分类管理</h1>
+
+<a href="<?= \yii\helpers\Url::to(['add']) ?>" class="btn btn-info">+</a>
+<table class="table">
     <tr>
-        <th>文章名称</th>
-        <th>文章简介</th>
+        <th>ID</th>
+        <th>名称</th>
+        <th>简介</th>
         <th>状态</th>
         <th>排序</th>
-        <th>是否是帮助类</th>
         <th>操作</th>
     </tr>
-
-    <?php foreach ($articles as $article):?>
+    <?php
+    const STATUS = [0=>'禁用',1=>'激活'];
+    foreach ($articles as $article): ?>
         <tr>
-            <td><?=$article->name?></td>
-            <td><?=$article->intro?></td>
-            <td><?=$article->status?></td>
-            <td><?=$article->sort?></td>
-            <td><?=$article->is_help?></td>
+            <td><?= $article->id?></td>
+            <td><?= $article->name?></td>
+            <td><?= $article->content?></td>
+            <td><?= STATUS[$article->status]?></td>
+            <td><?= $article->sort?></td>
             <td>
-                <a href="<?=\yii\helpers\Url::to(['edit','id'=>$article->id])?>" class="btn btn-primary">编辑</a>
-                <a href="<?=\yii\helpers\Url::to(['delete','id'=>$article->id])?>" class="btn btn-danger">删除</a>
+                <a href="<?= \yii\helpers\Url::to(['edit', 'id' => $article->id]) ?>" class="btn btn-success">编辑</a>
+                <?= \yii\bootstrap\Html::a("删除", ['del', 'id' => $article->id], ["class" => "btn btn-danger"]) ?>
             </td>
         </tr>
-
-    <?php endforeach;?>
-    
-    
+    <?php endforeach; ?>
 </table>

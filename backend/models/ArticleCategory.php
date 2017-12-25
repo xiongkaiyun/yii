@@ -9,40 +9,42 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
- * @property string $intro
+ * @property string $content
  * @property integer $status
  * @property integer $sort
- * @property integer $is_help
  */
 class ArticleCategory extends \yii\db\ActiveRecord
 {
-
+    /**
+     * @inheritdoc
+     */
     public static function tableName()
     {
         return 'article_category';
     }
 
-    //设置规则
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            [['name', 'status', 'sort', 'is_help'], 'required'],
-            [['intro'], 'string'],
-            [['status', 'sort', 'is_help'], 'integer'],
-            [['name'], 'string', 'max' => 50],
+            [['name','status','sort'], 'required'],
+            [['content'], 'safe'],
         ];
     }
 
-    //lable
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
             'id' => 'ID',
-            'name' => '文章名称',
-            'intro' => '文章简介',
+            'name' => '名称',
+            'content' => '简介',
             'status' => '状态',
             'sort' => '排序',
-            'is_help' => '是否是帮助的相关分类',
         ];
     }
 }

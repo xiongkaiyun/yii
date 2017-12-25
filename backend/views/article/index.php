@@ -1,43 +1,43 @@
 <?php
-
+/* @var $this yii\web\View */
 ?>
-<a href="<?=\yii\helpers\Url::to(['add'])?>" class="btn btn-success">添加文章</a>
-<table class="table table-responsive table-bordered">
+<h1>文章管理</h1>
+
+<a href="<?= \yii\helpers\Url::to(['add']) ?>" class="btn btn-info">添加文章</a>
+<table class="table">
     <tr>
-        <th>文章名称</th>
-        <th>文章分类</th>
-        <th>文章简介</th>
-        <th>文章内容</th>
+        <th>ID</th>
+        <th>名称</th>
+        <th>分类</th>
+        <th>简介</th>
         <th>状态</th>
         <th>排序</th>
-        <th>上架时间</th>
+        <th>录入时间</th>
         <th>操作</th>
     </tr>
-
-    <?php foreach ($articles as $article):?>
+    <?php
+    const STATUS = [0=>'禁用',1=>'激活'];
+    foreach ($articles as $article): ?>
         <tr>
-            <td><?=$article->name?></td>
-            <td><?=$article->article_category_id?></td>
-            <td><?=$article->intro?></td>
-            <td><?=$article->contentName?></td>
+            <td><?= $article->id?></td>
+            <td><?= $article->name?></td>
+            <td><?= $article->articleCategory->name?></td>
+            <td><?= $article->content?></td>
             <td>
-                <?php if($article->status==1){
-                    echo "上架";
-                }else{
-                    echo "下架";
-                }
+                <?php
+                    if ($article->status==1){
+                        echo "<i class='glyphicon glyphicon-ok'></i>";
+                    }else{
+                        echo "<i class='glyphicon glyphicon-remove'></i>";
+                    }
                 ?>
             </td>
-
-            <td><?=$article->sort?></td>
-            <td><?=date("Y-m-d H:i:s",$article->inputtime)?></td>
+            <td><?= $article->sort?></td>
+            <td><?= date('Y-m-d H:i:s',$article->inputtime)?></td>
             <td>
-                <a href="<?=\yii\helpers\Url::to(['edit','id'=>$article->id])?>" class="btn btn-primary">编辑</a>
-                <a href="<?=\yii\helpers\Url::to(['delete','id'=>$article->id])?>" class="btn btn-danger">删除</a>
+                <a href="<?= \yii\helpers\Url::to(['edit', 'id' => $article->id]) ?>" class="btn btn-success">编辑</a>
+                <?= \yii\bootstrap\Html::a("删除", ['del', 'id' => $article->id], ["class" => "btn btn-danger"]) ?>
             </td>
         </tr>
-
-    <?php endforeach;?>
-
-
+    <?php endforeach; ?>
 </table>
