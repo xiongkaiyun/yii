@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $model backend\models\Category */
 /* @var $form ActiveForm */
 ?>
-<a href="<?=\yii\helpers\Url::to(['category/index'])?>" class="glyphicon glyphicon-home">返回首页</a>
+<a href="<?=\yii\helpers\Url::to(['category/index'])?>" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span></a>
 
 <div class="container">
 
@@ -49,9 +49,14 @@ use yii\widgets\ActiveForm;
 <?php
 //定义js代码块
 $js=<<<EOF
-
+    //展开所有节点
     var treeObj = $.fn.zTree.getZTreeObj("w1");
     treeObj.expandAll(true);
+    //默认选中
+   
+    var node = treeObj.getNodeByParam("id", $model->parent_id, null);
+    treeObj.selectNode(node);
+    
 
 EOF;
 

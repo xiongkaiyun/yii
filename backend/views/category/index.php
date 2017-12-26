@@ -1,6 +1,6 @@
 <a href="<?=\yii\helpers\Url::to(['add'])?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
 
-<table class="table table-bordered">
+<table class="table table-hover">
     <tr>
         <th>ID</th>
         <th>分类名称</th>

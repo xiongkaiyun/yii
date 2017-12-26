@@ -91,8 +91,7 @@ class CategoryController extends \yii\web\Controller
                     //1.父类id为0的时候 创建一级分类
 
 //                    $model->makeRoot();
-                    $model->name=$request->post()['Category']['name'];
-                    $model->intro=$request->post()['Category']['intro'];
+
                     $model->save();
 
                     \Yii::$app->session->setFlash("success","添加一级分类".$model->name."成功");
