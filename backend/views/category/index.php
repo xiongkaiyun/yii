@@ -1,3 +1,4 @@
+<h1>商品分类管理</h1>
 <a href="<?=\yii\helpers\Url::to(['add'])?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
 
 <table class="table table-hover">
