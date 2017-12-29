@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\Category;
+use yii\db\Exception;
 use yii\helpers\Json;
 
 class CategoryController extends \yii\web\Controller
@@ -10,7 +11,7 @@ class CategoryController extends \yii\web\Controller
     public function actionIndex()
     {
         //获取所有数据
-        $cates=Category::find()->orderBy('id')->all();
+        $cates=Category::find()->orderBy('tree,lft')->all();
 
         return $this->render('index', ['cates' => $cates]);
     }
@@ -72,8 +73,8 @@ class CategoryController extends \yii\web\Controller
         $model=Category::findOne($id);
 
         //获取所有分类数据
-        $cates=Category::find()->all();
-//        var_dump(Json::encode($cates));exit;
+        $cates=Category::find()->asArray()->all();
+        $cates[]=['id'=>0,'name'=>'一级目录','parent_id'=>0];
 
         $cates=Json::encode($cates);
 
@@ -87,28 +88,36 @@ class CategoryController extends \yii\web\Controller
             //后端数据验证
             if ($model->validate()) {
 
-                if ($model->parent_id==0){
-                    //1.父类id为0的时候 创建一级分类
-
+                //捕获异常
+                try {//尝试执行这里所有代码,一旦发生错误,结束执行.跳转到catch中执行
+                    if ($model->parent_id == 0) {
+                        //1.父类id为0的时候 创建一级分类
 //                    $model->makeRoot();
+                        $model->save();
 
-                    $model->save();
+                        \Yii::$app->session->setFlash("success", "修改一级分类" . $model->name . "成功");
 
-                    \Yii::$app->session->setFlash("success","添加一级分类".$model->name."成功");
+                    } else {
+                        //2.否则追加对应的父类
+                        //找到父节点
+                        $cateParent = Category::findOne($model->parent_id);
 
-                }else{
-                    //2.否则追加对应的父类
-                    //找到父节点
-                    $cateParent=Category::findOne($model->parent_id);
+                        //把新节点加入到父节点
+                        $model->prependTo($cateParent);
 
-                    //把新节点加入到父节点
-                    $model->prependTo($cateParent);
+                        \Yii::$app->session->setFlash("success", "把" . $model->name . "添加到" . $cateParent->name . "成功");
 
-                    \Yii::$app->session->setFlash("success","把".$model->name."添加到".$cateParent->name."成功");
+                    }
+
+                }catch (Exception $exception){
+
+                    \Yii::$app->session->setFlash("danger",$exception->getMessage());
+
+                    return $this->refresh();
 
                 }
                 //刷新当前页
-                return $this->refresh();
+                return $this->redirect(['index']);
             }
 
         }

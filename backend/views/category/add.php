@@ -54,8 +54,8 @@ $js=<<<EOF
     treeObj.expandAll(true);
     //默认选中
    
-    var node = treeObj.getNodeByParam("id", $model->parent_id, null);
-    treeObj.selectNode(node);
+    var node = treeObj.getNodeByParam("id", "{$model->parent_id}", null);//得到节点
+    treeObj.selectNode(node);//选择节点
     
 
 EOF;

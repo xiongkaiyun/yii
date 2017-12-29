@@ -71,4 +71,10 @@ class Category extends \yii\db\ActiveRecord
             'intro'=>'简介'
         ];
     }
+
+    //得到层级结构
+    public function getNameText(){
+        return str_repeat("&ensp;",$this->depth*2);
+    }
+
 }

@@ -40,6 +40,7 @@ AppAsset::register($this);
         ['label'=>'文章管理','url'=>['/article/index']],
         ['label'=>'文章分类管理','url'=>['/article-category/index']],
         ['label'=>'品牌分类管理','url'=>['/brand/index']],
+        ['label'=>'商品管理','url'=>['/goods/index']],
         ['label'=>'商品分类管理','url'=>['/category/index']],
 
     ];
