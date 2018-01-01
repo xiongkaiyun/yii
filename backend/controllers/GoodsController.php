@@ -149,6 +149,7 @@ class GoodsController extends \yii\web\Controller
             return $this->render('add', ['goodsIntro' => $goodsIntro, 'goods' => $goods, 'brandsArr' => $brandsArr, 'catesArr' => $catesArr]);
     }
 
+    //修改
         public function actionEdit($id){
             //创建商品模型对象
             $goods=Goods::findOne($id);
@@ -165,7 +166,7 @@ class GoodsController extends \yii\web\Controller
             //把所有商品分类给传过来
             $cates=Category::find()->orderBy('tree,lft')->all();
             //转化成键值对
-            $catesArr=ArrayHelper::map($cates,'id','nameText');
+            $catesArr=ArrayHelper::map($cates,'id','name');
 
 
             //把所有商品品牌给传过来
@@ -200,17 +201,17 @@ class GoodsController extends \yii\web\Controller
                     if ($goods->save()) {
                         //保存商品详情
                         $goodsIntro->load($request->post());
-                        $goodsIntro->goods_id=$model->id;
+                        $goodsIntro->goods_id=$goods->id;
                         $goodsIntro->save();
 
                         //保存多图
                         //删除所有图片
                         GoodsGallery::deleteAll(['goods_id'=>$id]);
-                        foreach ($model->imgFiles as $img){
+                        foreach ($goods->imgFiles as $img){
                             //一定要在这里new
                             $goodsGallery=new GoodsGallery();
                             //批量赋值
-                            $goodsGallery->goods_id=$model->id;
+                            $goodsGallery->goods_id=$goods->id;
                             $goodsGallery->path=$img;
                             //保存
                             $goodsGallery->save();
