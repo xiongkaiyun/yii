@@ -3,6 +3,8 @@
 namespace backend\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "goods".
@@ -21,14 +23,29 @@ use Yii;
  */
 class Goods extends \yii\db\ActiveRecord
 {
+    //显示多图
+    public $imgFiles;
+
+    //
+    public function behaviors()
+    {
+        return [
+          [
+              'class'=>TimestampBehavior::className(),
+              'attributes' => [
+                  ActiveRecord::EVENT_BEFORE_INSERT=>['create_time']
+              ]
+          ]
+        ];
+    }
 
     //设置规则
     public function rules()
     {
         return [
-            [['name', 'num', 'logo', 'category_id', 'brand_id', 'market_price', 'sale_price', 'inventory', 'create_time'], 'required'],
-            [['category_id', 'brand_id', 'inventory', 'status', 'create_time'], 'integer'],
-            [['logo'],'image','extensions' => "jpg,png,gif",'skipOnEmpty' => 'false']
+            [['name','logo', 'category_id', 'brand_id', 'market_price', 'sale_price', 'inventory','status','sort'], 'required'],
+            [['num'],'unique'],
+            [['imgFiles'],'safe']
 
         ];
     }
@@ -50,12 +67,12 @@ class Goods extends \yii\db\ActiveRecord
             'create_time' => '上架时间',
         ];
     }
-    //获取商品介绍
-    public function getIntro(){
-        return $this->hasOne(GoodsIntro::className(),['goods_id'=>'id']);
-    }
-    //获取商品图片
-    public function getGallery(){
-        return $this->hasMany(GoodsGallery::className(),['goods_id'=>'id']);
-    }
+//    //获取商品介绍
+//    public function getIntro(){
+//        return $this->hasOne(GoodsIntro::className(),['goods_id'=>'id']);
+//    }
+//    //获取商品图片
+//    public function getGallery(){
+//        return $this->hasMany(GoodsGallery::className(),['goods_id'=>'id']);
+//    }
 }

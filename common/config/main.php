@@ -1,6 +1,6 @@
 <?php
 return [
-    'language'=>'zh-CN',//中午
+    'language'=>'zh-CN',//中国
     'timeZone'=>'PRC',//时区
     'defaultRoute'=>'brand/index',//默认路由
     'aliases' => [

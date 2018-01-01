@@ -7,6 +7,7 @@ $params = array_merge(
 );
 
 return [
+    'timeZone'=>'PRC',//时区
     'id' => 'app-console',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],

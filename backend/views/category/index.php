@@ -16,7 +16,7 @@
             data-rgt="<?=$cate->rgt?>"
         >
             <td><?=$cate->id?></td>
-            <td><?=$cate->nameText?><span class="glyphicon glyphicon-triangle-bottom"></span><?=$cate->name?></td>
+            <td><span class="glyphicon glyphicon-triangle-bottom"></span><?=$cate->nameText?></td>
             <td><?=$cate->parent_id?></td>
             <td><?=$cate->intro?></td>
             <td>
