@@ -107,12 +107,17 @@ class AdminController extends \yii\web\Controller
             $this->redirect(['admin/index']);
         }
 
-
     }
 
 
     //登录
     public function actionLogin(){
+
+        //判定是否是游客
+        if (!\Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         //创建表单模型对象
         $admins=new LoginForm();
 
@@ -138,9 +143,13 @@ class AdminController extends \yii\web\Controller
                         $admin->last_login_at=time();
                         //获取最后登录ip
                         $admin->last_login_ip=\Yii::$app->request->userIP;
+                        //保存
                         $admin->save();
                         //跳转
+
+                        \Yii::$app->session->setFlash("success","登录成功");
                         return $this->redirect(['index']);
+
 
                     }else{
                         //提示密码错误
