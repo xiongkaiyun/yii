@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\Admin;
 use backend\models\LoginForm;
+use yii\helpers\ArrayHelper;
 
 class AdminController extends \yii\web\Controller
 {
@@ -23,6 +24,13 @@ class AdminController extends \yii\web\Controller
         $admins=new Admin();
         //创建request组件
         $request=\Yii::$app->request;
+
+        //创建组件
+        $auth=\Yii::$app->authManager;
+        //得到角色
+        $role=$auth->getRoles();
+//        var_dump($role);exit;
+        $roleArr=ArrayHelper::map($role,'name','description');
         //判定是否post提交
         if ($request->isPost) {
             //绑定数据
@@ -44,7 +52,20 @@ class AdminController extends \yii\web\Controller
                 $admins->last_login_at=time();
                 //获取最后登录ip
                 $admins->last_login_ip=\Yii::$app->request->userIP;
-                $admins->save();
+                //保存数据
+                if ($admins->save()) {
+                    if($admins->roles){
+                        foreach ($admins->roles as $roleName){
+                            $row=$auth->getRole($roleName);
+                            $auth->assign($row,$admins->id);
+
+                        }
+
+                    }
+
+                }
+
+
                 //跳转主页
                 return $this->redirect(['admin/index']);
 
@@ -55,7 +76,7 @@ class AdminController extends \yii\web\Controller
 
         }
 
-        return $this->render('add', compact('admins'));
+        return $this->render('add', compact('admins','roleArr'));
 
     }
 
@@ -65,8 +86,18 @@ class AdminController extends \yii\web\Controller
     {
         //找到要修改的信息
         $admins=Admin::findOne($id);
+        //存储修改前的密码
+        $pwd=$admins->password_hash;
+        //将密码设为空
+        $admins->password_hash="";
         //创建request组件
         $request=\Yii::$app->request;
+        //创建组件
+        $auth=\Yii::$app->authManager;
+        //得到角色
+        $role=$auth->getRoles();
+//        var_dump($role);exit;
+        $roleArr=ArrayHelper::map($role,'name','description');
         //判定是否post提交
         if ($request->isPost) {
             //绑定数据
@@ -81,9 +112,28 @@ class AdminController extends \yii\web\Controller
                 //保存数据
                 $admins->save();
 
-                \Yii::$app->session->setFlash("success","修改成功");
-                //修改成功自动登录
+                \Yii::$app->session->setFlash("success","注册成功");
+                //注册成功自动登录
                 \Yii::$app->user->login($admins,3600*24*7);
+                //获取最后登录时间
+                $admins->last_login_at=time();
+                //获取最后登录ip
+                $admins->last_login_ip=\Yii::$app->request->userIP;
+                //保存数据
+                $auth->revokeAll($admins->id);
+                if ($admins->save()) {
+                    if($admins->roles){
+                        foreach ($admins->roles as $roleName){
+                            $row=$auth->getRole($roleName);
+                            $auth->assign($row,$admins->id);
+
+                        }
+
+                    }
+
+                }
+
+
                 //跳转主页
                 return $this->redirect(['admin/index']);
 
@@ -93,8 +143,9 @@ class AdminController extends \yii\web\Controller
             }
 
         }
-
-        return $this->render('add', compact('admins'));
+        $row=$auth->getRolesByUser($id);
+        $admins->roles=array_keys($row);
+        return $this->render('add', compact('admins','roleArr'));
 
     }
 
@@ -148,7 +199,7 @@ class AdminController extends \yii\web\Controller
                         //跳转
 
                         \Yii::$app->session->setFlash("success","登录成功");
-                        return $this->redirect(['index']);
+                        return $this->redirect(['admin/index']);
 
 
                     }else{
@@ -177,6 +228,11 @@ class AdminController extends \yii\web\Controller
 
         return $this->redirect(['admin/login']);
 
+    }
+
+    public function actionRbac(){
+
+        var_dump(\Yii::$app->user->can('brand/add'));
     }
 
 

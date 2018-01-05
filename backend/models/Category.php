@@ -74,7 +74,7 @@ class Category extends \yii\db\ActiveRecord
 
     //得到层级结构
     public function getNameText(){
-        return str_repeat("-",$this->depth*2);
+        return str_repeat("-",$this->depth*2).$this->name;
     }
 
 }

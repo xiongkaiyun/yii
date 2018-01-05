@@ -100,7 +100,6 @@ class GoodsController extends \yii\web\Controller
             //绑定数据
             $goods->load($request->post());
 
-
             //验证数据
             if($goods->validate()) {
                 //判断货号sn是否有值
@@ -166,7 +165,7 @@ class GoodsController extends \yii\web\Controller
             //把所有商品分类给传过来
             $cates=Category::find()->orderBy('tree,lft')->all();
             //转化成键值对
-            $catesArr=ArrayHelper::map($cates,'id','name');
+            $catesArr=ArrayHelper::map($cates,'id','nameText');
 
 
             //把所有商品品牌给传过来

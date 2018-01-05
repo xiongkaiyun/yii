@@ -14,7 +14,10 @@ use yii\widgets\ActiveForm;
         <?= $form->field($admins, 'username') ?>
 
         <?= $form->field($admins, 'password_hash') ?>
+
         <?= $form->field($admins, 'email') ?>
+        <?= $form->field($admins, 'roles')->checkboxList($roleArr) ?>
+
 
     
         <div class="form-group">

@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $goods backend\models\Goods */
 /* @var $form ActiveForm */
 ?>
-<div class="goods-add">
+<div class="col-xs-6" >
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -16,11 +16,17 @@ use yii\widgets\ActiveForm;
         <?= $form->field($goods, 'logo')->widget(\manks\FileInput::className(),['clientOptions' => [ 'server' => \yii\helpers\Url::to(['brand/upload'])]]) ?>
     <?= $form->field($goods, 'category_id')->dropDownList($catesArr,['prompt'=>'请选择一个分类']
     ) ?>
+
+
+
     <?= $form->field($goods, 'brand_id')->dropDownList($brandsArr) ?>
         <?= $form->field($goods, 'market_price') ?>
         <?= $form->field($goods, 'sale_price') ?>
         <?= $form->field($goods, 'inventory') ?>
         <?= $form->field($goods, 'status')->radioList(['1'=>'上架','0'=>'下架'],['value'=>1]) ?>
+</div>
+
+<div class="col-xs-6">
     <?= $form->field($goods, 'sort')->label("排序")->textInput(['value'=>100]) ?>
     <?= $form->field($goods, 'imgFiles')->label("多图上传")->widget('manks\FileInput', [
         'clientOptions' => [
@@ -42,4 +48,4 @@ use yii\widgets\ActiveForm;
         </div>
     <?php ActiveForm::end(); ?>
 
-</div><!-- goods-add -->
+    </div>

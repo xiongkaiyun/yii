@@ -25,6 +25,22 @@ use yii\web\IdentityInterface;
  */
 class Admin extends \yii\db\ActiveRecord implements IdentityInterface
 {
+    public $roles;
+    //设置场景
+    public function scenarios()
+    {
+        //继承父类场景
+        $parent=parent::scenarios();
+
+        //合并场景
+       return array_merge($parent, [
+           'add'=>['username','password_hash','email'],
+           'edit'=>['username','email']
+       ]);
+
+    }
+
+
     //设置行为
     public function behaviors()
     {
@@ -39,20 +55,16 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
-
-    public static function tableName()
-    {
-        return 'admin';
-    }
-
-    /**
-     * @inheritdoc
-     */
+    //规则
     public function rules()
     {
         return [
-            [['username', 'password_hash', 'email'], 'required'],
-            [['status', 'created_at', 'updated_at', 'last_login_at'], 'safe'],
+
+
+            [['username','email','password_hash'], 'required','on' => ['add']],
+            [['username','email'],'required','on' => ['edit']],
+
+            [['status', 'created_at', 'updated_at', 'last_login_at','roles'], 'safe'],
             [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['last_login_ip'], 'string', 'max' => 15],
@@ -149,4 +161,5 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->auth_key===$authKey;
     }
+
 }

@@ -2,6 +2,7 @@
 <table class="table">
     <tr>
         <th>管理员名称</th>
+
         <th>管理员邮箱</th>
         <th>注册时间</th>
         <th>最后登录时间</th>
@@ -12,6 +13,7 @@
     <?php foreach ($admins as $admin):?>
         <tr>
             <td><?=$admin->username?></td>
+
             <td><?=$admin->email?></td>
             <td><?=date("Y-m-d H:i:s",$admin->created_at)?></td>
             <td><?=date("Y-m-d H:i:s",$admin->last_login_at)?></td>
