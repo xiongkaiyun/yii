@@ -26,7 +26,7 @@ return [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
             'admin/*',
-            'rbac/*',
+//            'rbac/*',
 
             // The actions listed here will be allowed to everyone including guests.
             // So, 'admin/*' should not appear here in the production, of course.
@@ -74,6 +74,7 @@ return [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
+            'loginUrl' => 'amin/login',
             //用哪个模型来实现用户操作
             'identityClass' => \backend\models\Admin::className(),
             'enableAutoLogin' => true,
