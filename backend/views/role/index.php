@@ -4,6 +4,8 @@
 <h1>角色列表</h1>
 
 <a href="<?=\yii\helpers\Url::to(['add'])?>" class="btn btn-primary">添加</a>
+<div class="table-responsive">
+
 
 <table class="table">
     <tr>
@@ -44,3 +46,4 @@
 
 
 </table>
+</div>

@@ -3,6 +3,10 @@
 ?>
 <h1>品牌列表</h1>
 <a href="<?=\yii\helpers\Url::to(['add'])?>" class="btn btn-primary">添加品牌</a>
+
+<div class="table-responsive">
+
+
 <table class="table table-bordered">
     <tr>
         <th>品牌名称</th>
@@ -39,4 +43,4 @@
         
     </tr>
 </table>
-
+</div>

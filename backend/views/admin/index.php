@@ -1,4 +1,9 @@
 <a href="<?=\yii\helpers\Url::to(['admin/add'])?>" class="btn btn-primary">注册</a>
+
+
+<div class="table-responsive">
+
+
 <table class="table">
     <tr>
         <th>管理员名称</th>
@@ -27,5 +32,8 @@
     <?php endforeach;?>
 
 </table>
+
+
+</div>
 
 

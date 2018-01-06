@@ -5,6 +5,10 @@
 
 <a href="<?=\yii\helpers\Url::to(['add'])?>" class="btn btn-primary">添加</a>
 
+
+<div class="table-responsive">
+
+
 <table class="table">
     <tr>
         <th>名称</th>
@@ -27,3 +31,4 @@
 
 
 </table>
+</div>

@@ -1,6 +1,9 @@
 <h1>商品分类管理</h1>
 <a href="<?=\yii\helpers\Url::to(['add'])?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
 
+<div class="table-responsive">
+
+
 <table class="table table-hover">
     <tr>
         <th>ID</th>
@@ -27,7 +30,7 @@
     <?php endforeach;?>
 
 </table>
-
+</div>
 <?php
 //定义JS
 $js=<<<JS

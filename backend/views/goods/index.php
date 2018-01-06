@@ -29,6 +29,10 @@
         </div>
     </div>
 
+
+    <div class="table-responsive">
+
+
 <table class="table">
     <tr>
         <th>ID</th>
@@ -81,6 +85,8 @@
     <?php endforeach;?>
 
 </table>
+
+    </div>
 <?=\yii\widgets\LinkPager::widget(
     ['pagination' => $pages]
 )?>

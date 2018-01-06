@@ -4,6 +4,9 @@
 <h1>文章管理</h1>
 
 <a href="<?= \yii\helpers\Url::to(['add']) ?>" class="btn btn-info">添加文章</a>
+<div class="table-responsive">
+
+
 <table class="table">
     <tr>
         <th>ID</th>
@@ -41,3 +44,5 @@
         </tr>
     <?php endforeach; ?>
 </table>
+
+</div>
