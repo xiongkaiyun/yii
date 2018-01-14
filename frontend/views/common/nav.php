@@ -10,7 +10,7 @@
                     ?>
                 </li>
                 <li class="line">|</li>
-                <li><a href="<?=\yii\helpers\Url::to(['order-detail/index'])?>">我的订单</a></li>
+                <li><a href="<?=\yii\helpers\Url::to(['order/index'])?>">我的订单</a></li>
                 <li class="line">|</li>
                 <li>客户服务</li>
 

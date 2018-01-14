@@ -36,12 +36,12 @@
                 </dt>
                 <dd>
                     <div class="prompt">
-                        您好，请<a href="">登录</a>
+                        您好，请<a href="/user/login">登录</a>
                     </div>
                     <div class="uclist mt10">
                         <ul class="list1 fl">
                             <li><a href="">用户信息></a></li>
-                            <li><a href="">我的订单></a></li>
+                            <li><a href="/order/index">我的订单></a></li>
                             <li><a href="/address/index">收货地址></a></li>
                             <li><a href="">我的收藏></a></li>
                         </ul>
