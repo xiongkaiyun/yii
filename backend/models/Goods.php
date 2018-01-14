@@ -67,12 +67,12 @@ class Goods extends \yii\db\ActiveRecord
             'create_time' => '上架时间',
         ];
     }
-//    //获取商品介绍
-//    public function getIntro(){
-//        return $this->hasOne(GoodsIntro::className(),['goods_id'=>'id']);
-//    }
-//    //获取商品图片
-//    public function getGallery(){
-//        return $this->hasMany(GoodsGallery::className(),['goods_id'=>'id']);
-//    }
+   //获取商品详情 1对1
+   public function getIntro(){
+        return $this->hasOne(GoodsIntro::className(),['goods_id'=>'id']);
+   }
+   //获取商品图片 1对多
+   public function getGallery(){
+        return $this->hasMany(GoodsGallery::className(),['goods_id'=>'id']);
+   }
 }
